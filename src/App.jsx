@@ -14,13 +14,12 @@ function App() {
   const isFetching = useSelector(state => state.repos.isFetching)
   const currentPage = useSelector(state => state.repos.currentPage)
   const perPage = useSelector(state => state.repos.perPage)
-  const [searchValue, setSearchValue] = useState("")
 
   const pages = [1,2,3,4,5]
 
   useEffect(() => {
-    dispatch(getPhotos(currentPage, perPage))
-  }, [currentPage])
+    dispatch(getPhotos())
+  }, [])
 
   return (
     <div>

@@ -32,8 +32,8 @@ export default function Gallery(props) {
   //   const handleUrl = (i) => setUrl(i);
   return (
     <ImageList sx={{ width: "100%", height: "100%" }} cols={6} rowHeight={164}>
-      {photos && photos.map((item) => (
-        <ImageListItem key={item.thumbnailUrl} onClick= {() => handleOpen(item.url)} 
+      {photos && photos.map((item, id) => (
+        <ImageListItem key={id} onClick= {() => handleOpen(item.url)} 
         >
           <img
             src={`${item.thumbnailUrl}?w=164&h=164&fit=crop&auto=format`}
