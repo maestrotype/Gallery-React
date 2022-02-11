@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Pagination from '@mui/material/Pagination';
-import { getPagePhotos } from './store/photosReducer';
 import { useDispatch } from 'react-redux';
+import { getPagePhotos } from './store/actions';
 
 export default function PaginationPictures(props) {
     const dispatch = useDispatch()

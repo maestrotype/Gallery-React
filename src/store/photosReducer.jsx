@@ -27,7 +27,7 @@ export const photosReducer = (state = defaultState, action) => {
   }
 };
 
-export const getPagePhotos = (repos) => ({
+export const setPagePhotos = (repos) => ({
   type: GET_PAGE_PHOTOS,
   payload: repos,
 });
