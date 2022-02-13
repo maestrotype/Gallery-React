@@ -7,15 +7,15 @@ const defaultState = {
   photos: [],
   isFetching: true,
   currentPage: 1,
-  perPage: 100,
+  pages: 0,
 };
 
 export const photosReducer = (state = defaultState, action) => {
   switch (action.type) {
     case GET_PHOTOS:
-      return { ...state, photos: action.payload };
+      return { ...state, photos: action.payload, pages: action.pages };
     case GET_PAGE_PHOTOS:
-      return { ...state, photos: action.payload };
+      return { ...state, photos: action.payload, currentPage: action.currentPage };
     case "SELECT_ALBUM_ID":
       return { ...state, photos: state + action.payload };
     case SET_IS_FETCHING:
@@ -27,11 +27,12 @@ export const photosReducer = (state = defaultState, action) => {
   }
 };
 
-export const setPagePhotos = (repos) => ({
+export const setPagePhotos = (repos, page) => ({
   type: GET_PAGE_PHOTOS,
   payload: repos,
+  currentPage: page
 });
-export const setPhotos = (repos) => ({ type: GET_PHOTOS, payload: repos });
+export const setPhotos = (repos, pages) => ({ type: GET_PHOTOS, payload: repos, pages: pages });
 export const setIsFetching = (bool) => ({
   type: SET_IS_FETCHING,
   payload: bool,

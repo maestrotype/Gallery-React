@@ -13,9 +13,9 @@ function App() {
   const repos = useSelector(state => state.repos)
   const isFetching = useSelector(state => state.repos.isFetching)
   const currentPage = useSelector(state => state.repos.currentPage)
-  const perPage = useSelector(state => state.repos.perPage)
-
-  const pages = [1,2,3,4,5]
+  console.log("currentPage", currentPage);
+  const pages = useSelector(state => state.repos.pages)
+  console.log("pages", pages);
 
   useEffect(() => {
     dispatch(getPhotos())
@@ -23,7 +23,7 @@ function App() {
 
   return (
     <div>
-      <Pagination page = {currentPage} />
+      <Pagination page={currentPage} pages = {pages} />
       <Grid
         container
         direction="row"
@@ -34,7 +34,7 @@ function App() {
           <Gallery repos = {repos} />
         </Grid>
         <Grid item xs={2} md={2}>
-          <Select />
+          <Select pages = {pages}/>
         </Grid>
       </Grid>
     </div>

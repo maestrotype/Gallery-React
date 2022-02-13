@@ -1,34 +1,25 @@
 import { useState, useEffect } from "react";
-import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Box from "@mui/material/Box";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 
-export default function BasicSelect() {
+export default function BasicSelect(pages) {
   const [albums, setAlbums] = useState([]);
-  const [albumId, setAlbumId] = useState('');
+  const [albumId, setAlbumId] = useState("");
   let albumsId = [];
 
   const handleChange = (event) => {
     setAlbumId(event.target.value);
   };
 
-  albumsId = albums.map((elem) => elem['albumId'])
+  albumsId = albums.map((elem) => elem["albumId"]);
 
-  let uniqueAlbums = albumsId.reduce((unique, item) => unique.includes(item) ? unique : [...unique, item], [])
-
-  // useEffect(() => {
-  //   fetch("http://jsonplaceholder.typicode.com/photos")
-  //     .then((response) => response.json())
-
-  //     .then(
-  //         (data) => {
-  //         setAlbums(data)
-  //         console.log("data", data);
-  //         }
-  //         );
-  // }, []);
+  let uniqueAlbums = albumsId.reduce(
+    (unique, item) => (unique.includes(item) ? unique : [...unique, item]),
+    []
+  );
 
   return (
     <Box sx={{ minWidth: 120, p: 2 }}>
@@ -41,11 +32,12 @@ export default function BasicSelect() {
           label="album Id"
           onChange={handleChange}
         >
-          {/* {
-            // uniqueAlbums.map((itemy) => 
-            // // <MenuItem value={item}>{ item }</MenuItem>
-          )
-          } */}
+          {
+         Array.prototype.map.call(pages, (value, index) =>
+              <MenuItem value={index}>{index}</MenuItem>
+            
+           )
+          }
         </Select>
       </FormControl>
     </Box>

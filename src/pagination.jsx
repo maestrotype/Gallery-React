@@ -5,16 +5,14 @@ import { getPagePhotos } from './store/actions';
 
 export default function PaginationPictures(props) {
     const dispatch = useDispatch()
-    // const [page, setPage] = React.useState(1);
-    const handleChange = (event, value) => {
-        console.log("event", event);
-        console.log("value", value);
-    dispatch(getPagePhotos(value))    
-    //   setPage(value);
-    };
+    const pages = props.pages
     const page = props.page
+    const handleChange = (event, value) => {
+        
+    dispatch(getPagePhotos(value))    
+    };
   
     return (
-        <Pagination count={10} page={page} onChange={handleChange}/>
+        <Pagination count={pages} page={page} onChange={handleChange}/>
     )
 }
