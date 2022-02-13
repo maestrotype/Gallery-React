@@ -1,43 +1,38 @@
-import { useState, useEffect } from "react";
+import React from "react";
+import { useDispatch } from "react-redux";
+import { getPagePhotos } from "./store/actions";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 
-export default function BasicSelect(pages) {
-  const [albums, setAlbums] = useState([]);
-  const [albumId, setAlbumId] = useState("");
-  let albumsId = [];
-
+export default function BasicSelect(props) {
+  const dispatch = useDispatch();
+  let albumId = 1;
   const handleChange = (event) => {
-    setAlbumId(event.target.value);
+    albumId = event.target.value;
+    console.log("albumId", albumId);
+    dispatch(getPagePhotos(albumId));
   };
-
-  albumsId = albums.map((elem) => elem["albumId"]);
-
-  let uniqueAlbums = albumsId.reduce(
-    (unique, item) => (unique.includes(item) ? unique : [...unique, item]),
-    []
-  );
 
   return (
     <Box sx={{ minWidth: 120, p: 2 }}>
       <FormControl fullWidth>
-        <InputLabel id="albumId-label">Age</InputLabel>
+        <InputLabel id="albumId-label">album Id</InputLabel>
         <Select
           labelId="albumId"
           id="albumId"
-          value={albumId}
           label="album Id"
           onChange={handleChange}
         >
-         
-         {Array(pages).fill(null).map((el, index) => 
-           <MenuItem key={index} value={el}>{el}</MenuItem>
-         )}
-              
-
+          {Array(props.pages)
+            .fill(null)
+            .map((el, index) => (
+              <MenuItem key={index} value={index + 1}>
+                {index + 1}
+              </MenuItem>
+            ))}
         </Select>
       </FormControl>
     </Box>

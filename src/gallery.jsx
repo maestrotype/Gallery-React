@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { useDispatch } from 'react-redux';
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import DeleteIcon from "@mui/icons-material/Delete";
 import Modal from "@mui/material/Modal";
-
+import { deletePhoto } from "./store/actions";
 
 const style = {
   position: "absolute",
@@ -17,32 +19,45 @@ const style = {
   p: 4,
 };
 
+const btn = {
+  position: "absolute",
+  bottom: "5px",
+  right: "5px",
+}
+
 export default function Gallery(props) {
+  const dispatch = useDispatch()
+
   let [url, setUrl] = useState("3434")
   const photos = props.repos.photos
-  const isFething = props.isFething
+  
+  let [selectId, setSelectId] = useState(0)
 
-
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = function (itemUrl) {
+  const [open, setOpen] = React.useState(false)
+  const handleOpen = function (item) {
     setOpen(true);
-    setUrl(itemUrl);
+    setSelectId(item.id)
+    setUrl(item.url);
   };
+  const deleteImg = () => { 
+    dispatch(deletePhoto(photos, selectId))
+    setOpen(false)
+  }
   const handleClose = () => setOpen(false);
-  //   const handleUrl = (i) => setUrl(i);
+  
   return (
     <ImageList sx={{ width: "100%", height: "100%" }} cols={6} rowHeight={164}>
-      {photos && photos.map((item, id) => (
-        <ImageListItem key={id} onClick= {() => handleOpen(item.url)} 
-        >
-          <img
-            src={`${item.thumbnailUrl}?w=164&h=164&fit=crop&auto=format`}
-            srcSet={`${item.thumbnailUrl}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-            alt={item.title}
-            loading="lazy"
-          />
-        </ImageListItem>
-      ))}
+      {photos &&
+        photos.map((item, id) => (
+          <ImageListItem key={id} onClick={() => handleOpen(item)}>
+            <img
+              src={`${item.thumbnailUrl}?w=164&h=164&fit=crop&auto=format`}
+              srcSet={`${item.thumbnailUrl}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+              alt={item.title}
+              loading="lazy"
+            />
+          </ImageListItem>
+        ))}
       <Modal
         open={open}
         onClose={handleClose}
@@ -50,12 +65,10 @@ export default function Gallery(props) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-        <img
-            src={url}
-            srcSet={url}
-            alt={'test'}
-            loading="lazy"
-          />
+          <img src={url} srcSet={url} alt={"test"} loading="lazy" />
+          <Button sx={btn} variant="outlined" startIcon={<DeleteIcon />} onClick={() => deleteImg()}>
+            Delete
+          </Button>
         </Box>
       </Modal>
     </ImageList>
