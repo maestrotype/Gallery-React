@@ -32,12 +32,12 @@ export default function BasicSelect(pages) {
           label="album Id"
           onChange={handleChange}
         >
-          {
-         Array.prototype.map.call(pages, (value, index) =>
-              <MenuItem value={index}>{index}</MenuItem>
-            
-           )
-          }
+         
+         {Array(pages).fill(null).map((el, index) => 
+           <MenuItem key={index} value={el}>{el}</MenuItem>
+         )}
+              
+
         </Select>
       </FormControl>
     </Box>
